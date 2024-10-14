@@ -1,17 +1,24 @@
 #!bin/bash
 
-#boot volume name
-bDIR="nvme0n1p6"
+#boot volume
+bootDIR="sda1"
 
-#home volume name
-hDIR="nvme0n1p7"
+#home volume
+homeDIR="sda2"
 
-mkfs.fat -F32 /dev/$bDIR
-mkfs.ext4 /dev/$hDIR
+#swap volume
+#swapDIR="sdx"
 
-mount /dev/$hDIR /mnt
+mkfs.fat -F32 /dev/$bootDIR
+mkfs.ext4 /dev/$homeDIR
+
+#mkswap /dev/$swapDIR
+#swapon /dev/$swapDIR
+
+
+mount /dev/$homeDIR /mnt
 mkdir /mnt/home /mnt/boot
-mount /dev/$bDIR /mnt/boot
+mount /dev/$bootDIR /mnt/boot
 
 #======================================================
 pacstrap /mnt base base-devel linux linux-firmware linux-headers git nano
